@@ -23,3 +23,26 @@ Then(/^URL should match (.*)$/, async function(ExpectedURL){
     expect(url).to.equal(ExpectedURL)
 
 })
+
+/**
+ * Web Interactions
+ */
+Given(/^A web page is opened$/, async function(){
+    await browser.url("https://the-internet.herokuapp.com/inputs")
+    await browser.setTimeout({implicit:15000, pageLoad:10000})
+    await browser.maximizeWindow()
+    await browser.pause(5000)
+})
+When(/^Perform web interactions$/, async function() {
+    let num = 12345
+    let strNum = num.toString()
+    let ele = await $('[type=number]')
+    ele.click()
+    // await ele.setValue(strNum)
+
+    for(let i = 0; i < strNum.length; i++){
+       let charStr = strNum.charAt(i)
+       await browser.pause(500)
+       await browser.keys(charStr)
+    }
+})
